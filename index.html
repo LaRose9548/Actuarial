@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Link JQUERY -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <title>Actuarial | TWP Final Project</title>
+</head>
+<body>
+  <p>Actuarial</p>
+
+  <div id="form">
+    <p>Questions Form: </p>
+    <form action="#">
+      <label>1) Do you smoke?
+        <div id="smokeQuestion">
+          <input type="radio" name="smoker" value="Yes" required>Yes
+          <input type="radio" name="smoker" value="No" required>No
+          <input type="radio" name="smoker" value="Previously" required>Previously
+        </div>
+      </label>
+      <div id="smokerAdditionalQuestions"></div>
+      <br>
+      <label>2) BMI:
+        <div id="BMIQuestion">
+          <table>
+            <tr>
+              <td>Height (ft): </td>
+              <td><input type="number" name="heightFtBMI" placeholder="5" required></td>
+            <tr>
+              <td>Height (in): </td>
+              <td><input type="number" name="heightInBMI" placeholder="10" required></td>
+            <tr>
+              <td>Weigth (lbs): </td>
+              <td><input type="number" name="weightBMI" placeholder="210" required></td>
+            </tr>
+          </table>
+        </div>
+      </label>
+      <br>3) Please supply a diabetic history.<br>
+      <label>a) Are you diabetic?
+        <div id="selfDiabeticQuestion">
+          <input type="radio" name="selfDiabetic" value="Yes" required>Yes
+          <input type="radio" name="selfDiabetic" value="No" required>No
+          <input type="radio" name="selfDiabetic" value="DontKnow" required>Don't know.
+        </div>
+      </label>
+      <br>
+      <label>b) Is your mother diabetic?
+        <div id="momDiabeticQuestion">
+          <input type="radio" name="momDiabetic" value="Yes" required>Yes
+          <input type="radio" name="momDiabetic" value="No" required>No
+          <input type="radio" name="momDiabetic" value="DontKnow" required>Don't know.
+        </div>
+      </label>
+      <br>
+      <label>c) Is your father diabetic?
+        <div id="dadDiabeticQuestion">
+          <input type="radio" name="dadDiabetic" value="Yes" required>Yes
+          <input type="radio" name="dadDiabetic" value="No" required>No
+          <input type="radio" name="dadDiabetic" value="DontKnow" required>Don't know.
+        </div>
+      </label>
+      <br>
+      <input type="submit" value="Results please.">
+    </form>
+  </div>
+
+  <div id="results"></div>
+
+  <div>
+    <input id="resetResults" type="button" value="Reset form and results.">
+  </div>
+
+  <!-- custom scripts -->
+  <script src="actuarial.js"></script>
+
+</body>
+</html>
