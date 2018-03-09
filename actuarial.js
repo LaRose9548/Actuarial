@@ -1,8 +1,12 @@
 // Global variables initialization
-let calcBMI = 0;
-let smokerJSON = {}; // retrieve smoker JSON object
-let diabeticJSON = {}; // retrieve diabetic JSON object
+let bmiOBJ = {
+  "Underweight":  { "min":  0.0, "max": 18.4 },
+  "Normal":       { "min": 18.5, "max": 24.9 },
+  "Overweight":   { "min": 25.0, "max": 29.9 },
+  "Obese":        { "min": 30.0, "max": 999.0 }
+};
 let personalData = {}; // Personal data from the form
+// Need to retrieve JSON data to something usable
 
 const parseData = (data) => {
   // Creating personal data object
@@ -15,8 +19,11 @@ const presentResults = () => {
 
 }
 
-const calculateBMI = () => {
+const calculateBMI = (heightIn, heightFt, weight) => {
+  let height = heightIn + heightFt * 12;
+  let bmi = ( weight / (height * height)) * 703;
 
+  return Math.round (bmi * 10) / 10; // Rounding to 1 decimal point
 }
 
 const determineActuarial = () => {
@@ -24,7 +31,7 @@ const determineActuarial = () => {
 }
 
 const calcPaksYear = (pksPeriod, numPaks) => {
-  numPaks = Math.ciel (numPaks); // round up
+  numPaks = Math.ceil (numPaks); // round up
   switch (pksPeriod) {
     case "perDay":    numPaksYear = numPaks * 365;
                       break;
@@ -34,6 +41,24 @@ const calcPaksYear = (pksPeriod, numPaks) => {
                       break;
     default:          console.log ("ERROR: Invalid pksPeriod value.")
   }
+
+  return numPaksYear;
+}
+
+const calcPeriodTime = (period, time) => {
+  let years = 0;
+
+  switch (period) { // round down
+    case "Years":   years = Math.floor (time);
+                    break;
+    case "Months":  years = Math.floor (time / 12);
+                    break;
+    case "Days":    years = Math.floor (time / 365);
+                    break;
+    default:        console.log ("ERROR: Invalid period of time.");
+  }
+
+  return years;
 }
 
 const addSmokerSpecificQuestions = (smokerType) => {
