@@ -1,0 +1,43 @@
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: 400;
+  font-family: "Alice", serif;
+  text-shadow: 2px 2px #aaa;
+  color: #333;
+}
+.tab {
+       display:inline-block;
+       margin-left: 40px;
+}
+
+.q {
+  font-family: "Farsan", serif;
+  font-size: 1.5em;
+}
+
+#button1 {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#button2 {
+  background-color: #FF0000;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
