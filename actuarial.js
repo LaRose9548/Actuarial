@@ -1,3 +1,14 @@
+// Retrieving JSON data
+let xmlhttp = new XMLHttpRequest();
+let myObj = {};
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+    }
+};
+xmlhttp.open("GET", "deathRate.json", true);
+xmlhttp.send();
+
 // Global variables initialization
 let bmiOBJ = {
   "Underweight":  { "min":  0.0, "max": 18.4 },
@@ -6,38 +17,45 @@ let bmiOBJ = {
   "Obese":        { "min": 30.0, "max": 999.0 }
 };
 let personalData = {}; // Personal data from the form
-// Need to retrieve JSON data to something usable
 
+// Functions
 const parseData = (data) => {
   // Creating personal data object
   data.forEach (( field ) => {
-    personalData[field.name] = field.value;
+    if (field.name === "heightFtBMI" || field.name === "heightInBMI"
+        || field.name === "weightBMI" || field.name === "numPaks"
+        || field.name === "quitTime" || field.name === "smokingTime") {
+      personalData[field.name] = Number.parseInt(field.value, 10);
+    } else {
+      personalData[field.name] = field.value;
+    }
   });
+
+  personalData["BMI"] = calculateBMI();
 }
 
 const presentResults = () => {
 
 }
 
-const calculateBMI = (heightIn, heightFt, weight) => {
-  let height = heightIn + heightFt * 12;
-  let bmi = ( weight / (height * height)) * 703;
+const calculateBMI = () => {
+  let h = ( personalData.heightInBMI + ( personalData.heightFtBMI * 12 ) );
+  let bmi = ( ( personalData.weightBMI ) / ( h * h ) ) * 703;
 
   return Math.round (bmi * 10) / 10; // Rounding to 1 decimal point
 }
 
 const determineActuarial = () => {
-
+  console.log(myObj);
 }
 
-const calcPaksYear = (pksPeriod, numPaks) => {
-  numPaks = Math.ceil (numPaks); // round up
-  switch (pksPeriod) {
-    case "perDay":    numPaksYear = numPaks * 365;
+const calcPaksYear = () => {
+  switch (personalData.pksPeriod) {
+    case "perDay":    numPaksYear = personalData.numPaks * 365;
                       break;
-    case "perWeek":   numPaksYear = numPaks * 52;
+    case "perWeek":   numPaksYear = personalData.numPaks * 52;
                       break;
-    case "perMonth":  numPaksYear = numPaks * 12;
+    case "perMonth":  numPaksYear = personalData.numPaks * 12;
                       break;
     default:          console.log ("ERROR: Invalid pksPeriod value.")
   }
@@ -49,70 +67,82 @@ const calcPeriodTime = (period, time) => {
   let years = 0;
 
   switch (period) { // round down
-    case "Years":   years = Math.floor (time);
+    case "Years":   years = time;
                     break;
-    case "Months":  years = Math.floor (time / 12);
+    case "Months":  years = time / 12;
                     break;
-    case "Days":    years = Math.floor (time / 365);
+    case "Days":    years = time / 365;
                     break;
     default:        console.log ("ERROR: Invalid period of time.");
   }
 
-  return years;
+  return years; // Float
 }
 
 const addSmokerSpecificQuestions = (smokerType) => {
   let stringHTML = "";
 
   if (smokerType === "Yes") {
-    stringHTML = `<br>\
-    <label>a) How many packs do you smoke and how often?\
-      <div id="smokeQuestionYesA">\
-        Number Packs: <input type="number" name="numPaks" placeHolder="2" required>\
-        <input type="radio" name="pksPeriod" value="perDay" required>per Day\
-        <input type="radio" name="pksPeriod" value="perWeek" required>per Week\
-        <input type="radio" name="pksPeriod" value="perMonth" required>per Month\
+    stringHTML =
+    `<label>
+      <div class="tab">a) How many packs do you smoke and how often?\
+        <div id="smokeQuestionYesA">\
+          <input type="number" name="numPaks" placeHolder="2" required> packs \
+          <input type="radio" name="pksPeriod" value="perDay" required>per Day\
+          <input type="radio" name="pksPeriod" value="perWeek" required>per Week\
+          <input type="radio" name="pksPeriod" value="perMonth" required>per Month\
+        </div>\
       </div>\
     </label>\
-    <br>\
-    <label>b) How long have you been smoking?\
-      <div id="smokeQuestionYesB">
-        Smoking Length: <input type="number" name="smokingTime" placeHolder="2" required>\
-        <input type="radio" name="smokingPeriod" value="Years" required>Years\
-        <input type="radio" name="smokingPeriod" value="Months" required>Months\
-        <input type="radio" name="smokingPeriod" value="Days" required>Days\
+    <br><br>\
+    <label>
+      <div class="tab">b) How long have you been smoking?\
+        <div id="smokeQuestionYesB">
+          <input type="number" name="smokingTime" placeHolder="2" required>\
+          <input type="radio" name="smokingPeriod" value="Years" required>Years\
+          <input type="radio" name="smokingPeriod" value="Months" required>Months\
+          <input type="radio" name="smokingPeriod" value="Days" required>Days\
+        </div>\
       </div>\
-    </label>`;
+    </label>\
+    <br>`;
   } else if (smokerType === "Previously"){
-    stringHTML = `<br>\
-    <label>a) How many packs did you smoke and how often?\
-      <div id="smokeQuestionPrevA">\
-        <input type="number" name="numPaks" placeHolder="2" required> packs \
-        <input type="radio" name="pksPeriod" value="perDay" required>per Day\
-        <input type="radio" name="pksPeriod" value="perWeek" required>per Week\
-        <input type="radio" name="pksPeriod" value="perMonth" required>per Month\
+    stringHTML =
+    `<label>
+      <div class="tab">a) How many packs did you smoke and how often?\
+        <div id="smokeQuestionPrevA">\
+          <input type="number" name="numPaks" placeHolder="2" required> packs \
+          <input type="radio" name="pksPeriod" value="perDay" required>per Day\
+          <input type="radio" name="pksPeriod" value="perWeek" required>per Week\
+          <input type="radio" name="pksPeriod" value="perMonth" required>per Month\
+        </div>\
       </div>\
     </label>\
-    <br>\
-    <label>b) How long did you smoke?\
-      <div id="smokeQuestionPrevB">
-        <input type="number" name="smokingTime" placeHolder="2" required>\
-        <input type="radio" name="smokingPeriod" value="Years" required>Years\
-        <input type="radio" name="smokingPeriod" value="Months" required>Months\
-        <input type="radio" name="smokingPeriod" value="Days" required>Days\
+    <br><br>\
+    <label>
+      <div class="tab">b) How long did you smoke?\
+        <div id="smokeQuestionPrevB">
+          <input type="number" name="smokingTime" placeHolder="2" required>\
+          <input type="radio" name="smokingPeriod" value="Years" required>Years\
+          <input type="radio" name="smokingPeriod" value="Months" required>Months\
+          <input type="radio" name="smokingPeriod" value="Days" required>Days\
+        </div>\
       </div>\
     </label>
-    <br>\
-    <label>c) How long since you quit smoking?\
-      <div id="smokeQuestionPrevC">
-        <input type="number" name="quitTime" placeHolder="2" required>\
-        <input type="radio" name="quitPeriod" value="Years" required>Years\
-        <input type="radio" name="quitPeriod" value="Months" required>Months\
-        <input type="radio" name="quitPeriod" value="Days" required>Days\
+    <br><br>\
+    <label>
+      <div class="tab">c) How long since you quit smoking?\
+        <div id="smokeQuestionPrevC">
+          <input type="number" name="quitTime" placeHolder="2" required>\
+          <input type="radio" name="quitPeriod" value="Years" required>Years\
+          <input type="radio" name="quitPeriod" value="Months" required>Months\
+          <input type="radio" name="quitPeriod" value="Days" required>Days\
+        </div>\
       </div>\
-    </label>`;
-  } else {
-    // Do nothing as stringHTML is ""
+    </label>\
+    <br>`;
+  } else { // smokerType === "No"
+    // stringHTML = `<br>`;
   }
 
   $('#smokerAdditionalQuestions').html(stringHTML);
@@ -121,7 +151,7 @@ const addSmokerSpecificQuestions = (smokerType) => {
 // Clicking Submit starts it all off :D
 $( "form" ).on( "submit", function ( event ) {
   var data = $( event.target ).serializeArray(); // Parsing form info to data obj
-console.log (data);
+
   // Preventing the submit button from submitting the form
   event.preventDefault();
 
@@ -129,7 +159,6 @@ console.log (data);
   parseData (data);
 
   // Making calculations
-  calculateBMI ();
   determineActuarial ();
 
   // Presenting results
@@ -137,13 +166,13 @@ console.log (data);
 
 });
 
-// Clicking a button resets it all
+// Clicking a button resets the form
 $( "#resetResults" ).on( "click", function ( event ) {
   $('form')[0].reset();
   presentResults (null); // Resetting results div
 });
 
-// Clicking Submit starts it all off :D
+// Answering smoker question changes additional questions
 $( "#smokeQuestion" ).on( "click", function ( event ) {
   var data = $( event.target ).serializeArray(); // Parsing form info to data obj
 

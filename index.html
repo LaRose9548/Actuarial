@@ -11,26 +11,35 @@
   <title>Actuarial | TWP Final Project</title>
 </head>
 <body>
+
   <h1>Actuarial: How Long Will I Live?</h1>
+
+<div id="demo"></div>
 
   <div id="form">
     <h2>Questions Form: </h2>
     <form action="#">
-    <div class= "q">
-      <label>1) Do you smoke?
-    </div>
-        <div class= "tab" id="smokeQuestion">
-          <input type="radio" name="smoker" value="Yes" required>Yes
-          <input type="radio" name="smoker" value="No" required>No
-          <input type="radio" name="smoker" value="Previously" required>Previously
-        </div>
+
+      <label>
+        <table>
+          <tr>
+            <td><div class= "q">1) Do you smoke?</div></td>
+            <td>
+              <div class= "tab" id="smokeQuestion">
+                <input type="radio" name="smoker" value="Yes" required>Yes
+                <input type="radio" name="smoker" value="No" required>No
+                <input type="radio" name="smoker" value="Previously" required>Previously
+              </div>
+            </td>
+          </tr>
+        </table>
       </label>
-    </div>
+
       <div id="smokerAdditionalQuestions"></div>
-      <br>
-    <div class = "q">
-        <label>2) BMI:
-    </div>
+      <br><br>
+
+      <label>
+        <div class = "q">2) BMI:</div>
         <div class= "tab" id="BMIQuestion">
           <table>
             <tr>
@@ -46,53 +55,59 @@
           </table>
         </div>
       </label>
-    </div>
-    <div class = "q">
-      <br>3) Please supply a diabetic history.<br>
-    </div>
-      <label class= "tab"> a) Are you diabetic?
-        <div class= "tab" id="selfDiabeticQuestion">
-        <table>
-          <tr>
-            <td>  <input type="radio" name="selfDiabetic" value="Yes" required>Yes </td>
-            <td>  <input type="radio" name="selfDiabetic" value="No" required>No </td>
-            <td>  <input type="radio" name="selfDiabetic" value="DontKnow" required>Don't know. </td>
-          </tr>
-        </table>
-        </div>
-      </label>
-    </div>
-      <br>
-      <label class="tab"> b) Is your mother diabetic?
-        <div class= "tab" id="momDiabeticQuestion">
-          <table>
-            <tr>
-              <td> <input type="radio" name="momDiabetic" value="Yes" required>Yes </td>
-              <td> <input type="radio" name="momDiabetic" value="No" required>No </td>
-              <td> <input type="radio" name="momDiabetic" value="DontKnow" required>Don't know.</td>
-            </tr>
-          </table>
-        </div>
-      </label>
-      <br>
-      <label class="tab"> c) Is your father diabetic?
-        <div class= "tab" id="dadDiabeticQuestion">
-          <table>
-            <tr>
-              <td>  <input type="radio" name="dadDiabetic" value="Yes" required>Yes </td>
-              <td>  <input type="radio" name="dadDiabetic" value="No" required>No </td>
-              <td>  <input type="radio" name="dadDiabetic" value="DontKnow" required>Don't know. </td>
-            </tr>
-          </table>
-        </div>
-      </label>
+
       <br><br>
 
-<span>
+      <div class = "q">3) Please supply a diabetic history.</div>
+
+      <table class="tab">
+        <label>
+          <tr>
+            <td>a) Are you diabetic?</td>
+            <td>
+              <div id="selfDiabeticQuestion">
+                <input type="radio" name="selfDiabetic" value="Yes" required>Yes
+                <input type="radio" name="selfDiabetic" value="No" required>No
+                <input type="radio" name="selfDiabetic" value="DontKnow" required>Don't know.
+              </div>
+            </td>
+          </tr>
+        </label>
+
+        <label>
+          <tr>
+            <td>b) Is your mother diabetic?</td>
+            <td>
+              <div id="momDiabeticQuestion">
+                <input type="radio" name="momDiabetic" value="Yes" required>Yes
+                <input type="radio" name="momDiabetic" value="No" required>No
+                <input type="radio" name="momDiabetic" value="DontKnow" required>Don't know.
+              </div>
+            </td>
+          </tr>
+        </label>
+
+        <label>
+          <tr>
+            <td>c) Is your father diabetic?</td>
+            <td>
+              <div id="dadDiabeticQuestion">
+                <input type="radio" name="dadDiabetic" value="Yes" required>Yes
+                <input type="radio" name="dadDiabetic" value="No" required>No
+                <input type="radio" name="dadDiabetic" value="DontKnow" required>Don't know.
+              </div>
+            </td>
+          </tr>
+        </label>
+      </table>
+
+      <br><br>
+
+  <!-- <span> -->
       <div id = "button1">
         <input type="submit" value="Results please.">
       </div>
-  </form>
+    </form>
   </div>
 
   <div id="results"></div>
@@ -100,7 +115,7 @@
   <div id = "button2">
     <input id="resetResults" type="button" value="Reset form and results.">
   </div>
-</span>
+<!-- </span> -->
 
   <!-- custom scripts -->
   <script src="actuarial.js"></script>
